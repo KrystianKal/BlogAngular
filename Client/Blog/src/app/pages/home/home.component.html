@@ -1,0 +1,43 @@
+<div
+  class="w-full text-white bg-accent flex font-mono gap-4 flex-col justify-center items-center py-9"
+>
+  <p class="font-semibold text-7xl" style="margin: 0px">Medium</p>
+  <p class="text-xl">A place to share your knowledge.</p>
+</div>
+
+<div class="centerColumn mt-4">
+  <mat-tab-group
+    animationDuration="0ms"
+    (selectedTabChange)="onTabChange($event)"
+  >
+    @for(tab of tabs | async;track tab ){
+
+    <mat-tab [label]="tab">
+      <div class="py-2">
+        <app-tags
+          *ngIf="tab === 'New'"
+          (tagChanged)="onTagChange($event)"
+        ></app-tags>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        <div *ngIf="articles$ | async as articles; loading">
+          @if(articles.articles.length === 0){ No articles found... } @else {
+          @for(article of articles.articles; track article.slug){
+          <app-article-preview [article]="article"></app-article-preview>
+          } }
+          <app-pagination
+            [itemCount]="articles.articleCount"
+            [pageSize]="(this.limit | async) || 0"
+            [page]="(this.currentPage | async) || 0"
+            (pageChanged)="onPageChange($event)"
+          ></app-pagination>
+        </div>
+        <ng-template #loading>
+          <mat-spinner diameter="50" />
+        </ng-template>
+      </div>
+    </mat-tab>
+    }
+  </mat-tab-group>
+</div>

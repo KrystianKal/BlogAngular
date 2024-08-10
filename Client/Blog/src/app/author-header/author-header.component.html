@@ -1,0 +1,15 @@
+<div *ngIf="author(); else loading" class="flex flex-row max-h-14 gap-2">
+  <a class="p-0" [routerLink]="['/profile', author().userName]">
+    <app-avatar [imageUrl]="author().image"></app-avatar>
+  </a>
+  <div class="flex flex-col 0">
+    <a class="pt-2" [routerLink]="['/profile', author().userName]">
+      {{ author().profileName }}
+    </a>
+    <p class="col-span-2 align-baseline text-textSecondary" style="margin: 0px">
+      {{ createdAt?.date | date : createdAt?.format ?? "dd MMM yyyy" }}
+    </p>
+  </div>
+</div>
+
+<ng-template #loading> ... </ng-template>

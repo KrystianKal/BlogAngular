@@ -1,0 +1,11 @@
+<div class="max-w-4xl">
+  <mat-chip-listbox>
+    @if(tags()){ @for(tag of tags()?.slice(0,21); track tag){
+    <mat-chip-option (selectionChange)="selectionChange(tag)">{{
+      tag
+    }}</mat-chip-option>
+    } } @else{
+    <mat-spinner diameter="50" />
+    }
+  </mat-chip-listbox>
+</div>

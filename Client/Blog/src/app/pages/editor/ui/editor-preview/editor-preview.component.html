@@ -1,0 +1,13 @@
+<div
+  class="flex flex-col overflow-y-auto overflow-x-clip max-w-4xl w-full"
+  style="max-height: 85vh"
+>
+  <p class="text-5xl text-textPrimary font-semibold font-mono">
+    {{ article().title }}
+  </p>
+  <p class="text-secondary">
+    // Description only visible in the preview // <br />
+    {{ article().description }}
+  </p>
+  <div [innerHTML]="article().body | Marked"></div>
+</div>

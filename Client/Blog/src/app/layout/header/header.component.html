@@ -1,0 +1,46 @@
+<header
+  class="bg-primary p-4 px-10 max-h-20 flex flex-row justify-between border-secondary"
+>
+  <a
+    routerLink="/"
+    class="text-textPrimary rounded-sm font-mono font-semibold text-4xl"
+    >Medium</a
+  >
+  <div class="flex fex-row gap-6">
+    @if(authService.user()){
+
+    <div
+      class="flex flex-row gap-2 justify-items-center items-center text-center"
+    >
+      <app-header-nav-button link="/" icon="home"> Home </app-header-nav-button>
+      <app-header-nav-button link="/edit" icon="assignment_add">
+        New Article
+      </app-header-nav-button>
+      <app-header-nav-button link="/settings" icon="settings"
+        >Settings</app-header-nav-button
+      >
+      <a routerLink="/profile">
+        <app-avatar [imageUrl]="authService.user()!.image"></app-avatar>
+      </a>
+      <div class="flex flex-col items-center">
+        <a class="text-textPrimary" routerLink="/profile">
+          {{ authService.user()?.name }}
+        </a>
+        <button (click)="logout()" class="text-textSecondaryBright">
+          Sign Out
+        </button>
+      </div>
+    </div>
+    } @else {
+    <button
+      class="text-textSecondary"
+      (click)="router.navigateByUrl('register')"
+    >
+      Sign Up
+    </button>
+    <button class="text-textSecondary" (click)="router.navigateByUrl('login')">
+      Sign In
+    </button>
+    }
+  </div>
+</header>

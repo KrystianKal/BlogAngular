@@ -1,0 +1,23 @@
+<div
+  [ngClass]="
+    isFollowed()
+      ? 'border-danger text-danger'
+      : 'border-secondary text-secondary'
+  "
+  class="border-2 h-full border-r-1 rounded-md rounded-r-none p-1"
+  *ngIf="authService.user()?.name !== profileName()"
+>
+  @if(isFollowed()){
+
+  <button class="flex gap-1" (click)="unfollow()">
+    <mat-icon>remove</mat-icon>
+    <p style="margin: 0px">Unfollow {{ profileName() }}</p>
+  </button>
+  } @else {
+  <button class="flex gap-1" (click)="follow()">
+    <mat-icon>add</mat-icon>
+    <p style="margin: 0px">Follow {{ profileName() }}</p>
+  </button>
+
+  }
+</div>

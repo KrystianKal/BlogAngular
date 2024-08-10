@@ -1,0 +1,49 @@
+<div
+  *ngIf="articleService.status() === 'Fetched'"
+  class="w-full text-white bg-slate-900 flex font-mono gap-4 flex-col justify-center items-center py-9"
+>
+  <p class="text-5xl font-semibold overflow-x-clip">
+    {{ article()!.title }}
+  </p>
+  <div class="flex flex-row gap-6 items-center">
+    <app-author-header
+      [author]="article()!.author"
+      [createdAt]="{ date: article()!.createdAt }"
+    >
+    </app-author-header>
+    <div class="flex flex-row h-1/5">
+      <app-follow [username]="article()!.author.userName"></app-follow>
+      <app-article-socials
+        [article]="article()!"
+        (articleFavorited)="toggleFavorite()"
+      ></app-article-socials>
+    </div>
+    @if( authService.user()?.name ===
+    articleService.article()!.author.profileName ){
+    <div>
+      <button (click)="onEdit()">Edit</button>
+      <button (click)="onDelete()" class="mx-2 text-danger">Delete</button>
+    </div>
+    }
+  </div>
+</div>
+
+<div class="centerColumn">
+  <div
+    *ngIf="articleService.status() === 'Fetched'; else loading"
+    class="pt-4 flex flex-col max-w-4xl gap-4 w-screen"
+  >
+    <div class="py-4" [innerHTML]="article()!.body | Marked"></div>
+    <div class="flex gap-2">
+      @for(tag of article()!.tagList; track tag ){
+      <mat-chip disabled> {{ tag }}</mat-chip>
+      }
+    </div>
+    <div class="self-center w-3/4">
+      <app-comments [slug]="article()!.slug"></app-comments>
+    </div>
+  </div>
+  <ng-template #loading>
+    <mat-progress-spinner></mat-progress-spinner>
+  </ng-template>
+</div>

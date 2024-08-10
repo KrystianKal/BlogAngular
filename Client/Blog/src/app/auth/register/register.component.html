@@ -1,0 +1,11 @@
+<div class="centerColumn py-8">
+  <div class="pb-4">
+    <p class="text-4xl font-semibold" style="margin-bottom: 5px">Sign up</p>
+    <a class="text-accent" routerLink="/login">Have an account?</a>
+  </div>
+  <app-register-form
+    [registrationStatus]="registerService.status()"
+    (register)="onSubmit($event)"
+  >
+  </app-register-form>
+</div>

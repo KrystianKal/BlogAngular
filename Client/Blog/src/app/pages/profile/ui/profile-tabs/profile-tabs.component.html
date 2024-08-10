@@ -1,0 +1,28 @@
+<mat-tab-group
+  animationDuration="0ms"
+  (selectedTabChange)="onTabChange($event.tab.textLabel)"
+>
+  @for(tab of tabs;track tab ){
+
+  <mat-tab [label]="tab">
+    <div class="flex flex-col gap-5">
+      <div *ngIf="articles$ | async as articles; loading">
+        @if(articles.articles.length == 0){
+        <p>No {{ tab }} articles</p>
+        }@else { @for(article of articles.articles; track article.slug){
+        <app-article-preview [article]="article"></app-article-preview>
+        } }
+        <app-pagination
+          [itemCount]="articles.articleCount"
+          [pageSize]="(this.limit | async) || 0"
+          [page]="(this.currentPage | async) || 0"
+          (pageChanged)="onPageChange($event)"
+        ></app-pagination>
+      </div>
+      <ng-template #loading>
+        <mat-spinner diameter="50" />
+      </ng-template>
+    </div>
+  </mat-tab>
+  }
+</mat-tab-group>

@@ -1,0 +1,98 @@
+<form
+  class="flex flex-col max-w-3xl h-full w-full justify-between"
+  style="max-height: 85vh"
+  onkeydown="return event.key != 'Enter';"
+  #articleForm="ngForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="flex-grow flex flex-col space-y-2">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        type="text"
+        required="true"
+        class="flex-grow-0 basis-1/6"
+        [(ngModel)]="article().title"
+        name="title"
+        #title="ngModel"
+      />
+      <mat-error *ngIf="title.invalid">{{ getError(title.control) }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        maxlength="200"
+        required="true"
+        style="resize: none"
+        [(ngModel)]="article().description"
+        name="description"
+        rows="2"
+        class="overflow-y-auto"
+        #description="ngModel"
+        >{{ article().description }}</textarea
+      >
+      <mat-hint aling="end">{{ article().description.length }}/200</mat-hint>
+      <mat-error *ngIf="description.invalid">{{
+        getError(description.control)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Body</mat-label>
+      <textarea
+        matInput
+        required="true"
+        rows="16"
+        style="resize: none"
+        [(ngModel)]="article().body"
+        name="body"
+        #body="ngModel"
+      >
+        {{ article()!.body }}
+      </textarea>
+      <mat-error *ngIf="body.invalid">{{ getError(body.control) }}</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="status() === 'Creating'">
+      <div class="flex flex-row overflow-y-auto">
+        <mat-chip-grid
+          #tagChipGrid
+          name="tagList"
+          [(ngModel)]="article().tagList"
+          #tags="ngModel"
+          required="true"
+          style="height: 3rem"
+        >
+          @for(tag of article()!.tagList; track tag){
+          <mat-chip-row (removed)="removeTag(tag)"
+            >{{ tag }}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip-row>
+          }
+        </mat-chip-grid>
+      </div>
+      <input
+        name="currentTag"
+        placeholder="New tag..."
+        #tagInput
+        [(ngModel)]="currentTag"
+        [matChipInputFor]="tagChipGrid"
+        [matAutocomplete]="auto"
+        (matChipInputTokenEnd)="addTag($event)"
+      />
+      <mat-label>Tags</mat-label>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selected($event)"
+      >
+        @for(tag of filteredTags(); track tag){
+        <mat-option [value]="tag">{{ tag }} </mat-option>
+        }
+      </mat-autocomplete>
+      <mat-error *ngIf="tags.invalid">{{ getError(tags.control) }}</mat-error>
+    </mat-form-field>
+  </div>
+  <button type="submit" class="justify-self-end">
+    {{ status() === "Editing" ? "Apply Changes" : "Create" }}
+  </button>
+</form>

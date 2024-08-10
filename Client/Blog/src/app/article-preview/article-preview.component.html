@@ -1,0 +1,25 @@
+<div class="max-w-4xl w-screen border-y p-2">
+  <a [routerLink]="['/article', article.slug]">
+    <p class="text-3xl font-medium">
+      {{ article.title }}
+    </p>
+    <p class="text-textSecondary">
+      {{
+        article.description.length >= 200
+          ? article.description.substring(0, 200) + "..."
+          : article.description
+      }}
+    </p>
+  </a>
+  <div class="flex flex-row justify-between">
+    <app-author-header
+      [author]="article.author"
+      [createdAt]="{ date: article.createdAt, format: 'dd MMM yyyy' }"
+    />
+    <mat-chip-set>
+      @for(tag of article.tagList; track tag){
+      <mat-chip disabled=""> {{ tag }}</mat-chip>
+      }
+    </mat-chip-set>
+  </div>
+</div>

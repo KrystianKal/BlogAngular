@@ -1,0 +1,23 @@
+<div class="flex flex-row gap-4 justify-center">
+  <button [disabled]="page() === 0" (click)="pageChanged.emit(0)">
+    <mat-icon fontIcon="first_page"></mat-icon>
+  </button>
+  <button [disabled]="page() === 0" (click)="pageChanged.emit(page() - 1)">
+    <mat-icon fontIcon="keyboard_arrow_left"></mat-icon>
+  </button>
+  <p class="px-4 my-0 font-medium" style="margin-bottom: 0px">
+    {{ page() + 1 }}/{{ totalPages === 0 ? 1 : totalPages }}
+  </p>
+  <button
+    [disabled]="page() + 1 === totalPages"
+    (click)="pageChanged.emit(page() + 1)"
+  >
+    <mat-icon fontIcon="keyboard_arrow_right"></mat-icon>
+  </button>
+  <button
+    [disabled]="page() + 1 === totalPages"
+    (click)="pageChanged.emit(totalPages - 1)"
+  >
+    <mat-icon fontIcon="last_page"></mat-icon>
+  </button>
+</div>

@@ -1,0 +1,11 @@
+<div
+  [ngClass]="
+    article().favorited ? 'border-accent text-accent' : 'border-secondary'
+  "
+  class="flex gap-6 h-full px-1 border-2 border-l-1 rounded-md rounded-l-none"
+>
+  <button class="flex gap-1 items-center" (click)="articleFavorited.emit()">
+    <mat-icon fontIcon="favorite"></mat-icon>
+    <p style="margin: 0px">Favorite article ({{ article().favoritesCount }})</p>
+  </button>
+</div>

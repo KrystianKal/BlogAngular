@@ -1,0 +1,17 @@
+@if(article()){
+<div class="flex flex-row gap-8 mt-8 max-h-screen w-full px-8">
+  <div class="basis-2/6 flex-shrink-0">
+    <app-editor-form
+      [article]="article()!"
+      [status]="status()"
+      (articleChange)="updateArticleInProgress($event)"
+      (submit)="submit()"
+    >
+    </app-editor-form>
+  </div>
+  <div class="basis-4/6 flex-grow-0">
+    <app-editor-preview [article]="article()!"></app-editor-preview>
+  </div>
+</div>
+
+}

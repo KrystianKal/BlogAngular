@@ -1,0 +1,42 @@
+<form
+  [formGroup]="loginForm"
+  class="flex flex-col gap-2"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field appearance="fill">
+    <mat-label>email</mat-label>
+    <input
+      matNativeControl
+      formControlName="email"
+      type="email"
+      placeholder="email"
+    />
+    <mat-icon matPrefix>mail</mat-icon>
+    <mat-error>{{ getError(loginForm.controls.email) }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>password</mat-label>
+    <input
+      matNativeControl
+      formControlName="password"
+      type="password"
+      placeholder="password"
+    />
+    <mat-icon matPrefix>lock</mat-icon>
+    <mat-error>{{ getError(loginForm.controls.password) }}</mat-error>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    type="submit"
+    [disabled]="loginStatus() === 'authenticating' || loginForm.invalid"
+  >
+    Log in
+  </button>
+  @if(loginStatus() === 'authenticating'){
+  <mat-spinner diameter="50"></mat-spinner>
+  } @if(loginStatus() === 'error'){
+  <mat-error>Invalid credentials</mat-error>
+  }
+</form>

@@ -1,0 +1,10 @@
+<div class="centerColumn pt-8">
+  <div class="pb-4">
+    <p class="text-4xl font-semibold" style="margin-bottom: 5px">Log In</p>
+    <a class="text-accent" routerLink="/register">Need an account?</a>
+  </div>
+  <app-login-form
+    [loginStatus]="loginService.status()"
+    (login)="loginService.login$.next($event)"
+  ></app-login-form>
+</div>
