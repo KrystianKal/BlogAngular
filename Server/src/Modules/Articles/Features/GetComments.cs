@@ -37,13 +37,11 @@ public class GetCommentsQueryHandler(BlogDbContext context, IAuthorService autho
             throw new ArticleNotFoundException(request.Slug);
         }
 
-        var commentResponses = await Task.WhenAll(
-            article.Comments.Select( async comment => {
-                var author =  await authorService.GetAuthor(comment.AuthorId, cancellationToken);
-                return new CommentResponse(comment,author);
-            })
-        );
-
+        var commentResponses = new List<CommentResponse>();
+        foreach(var comment in article.Comments){
+            var author =  await authorService.GetAuthor(comment.AuthorId, cancellationToken);
+            commentResponses.Add(new CommentResponse(comment,author));
+        }
         return new CommentsResponse(commentResponses.OrderByDescending(x=>x.CreatedAt).ToArray());
     }
 }

@@ -19,11 +19,11 @@
       <app-header-nav-button link="/settings" icon="settings"
         >Settings</app-header-nav-button
       >
-      <a routerLink="/profile">
+      <a routerLink="/profile/user">
         <app-avatar [imageUrl]="authService.user()!.image"></app-avatar>
       </a>
       <div class="flex flex-col items-center">
-        <a class="text-textPrimary" routerLink="/profile">
+        <a class="text-textPrimary" routerLink="/profile/user">
           {{ authService.user()?.name }}
         </a>
         <button (click)="logout()" class="text-textSecondaryBright">

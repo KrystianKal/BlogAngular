@@ -28,9 +28,9 @@ public class FeedArticlesQueryHandler(BlogDbContext context, IUserAccessor userA
     public async Task<ArticlesResponse> Handle(FeedArticlesQuery request, CancellationToken cancellationToken)
     {
         var currentUserId = userAccessor.GetCurrentUserId()!;
+            // .Include(x => x.Following)
         var currentUserFollowList = await context.Profiles
             .AsNoTracking()
-            .Include(x => x.Following)
             .Where(x => x.UserId == UserId.Parse(currentUserId))
             .SelectMany(x => x.Following.Select(f => f.Following.UserId))
             .ToListAsync(cancellationToken);
@@ -46,12 +46,11 @@ public class FeedArticlesQueryHandler(BlogDbContext context, IUserAccessor userA
             .Take(request.Limit)
             .ToListAsync (cancellationToken);
         
-        var articleResponses = await Task.WhenAll(
-            articles.Select(async article => {
-                var author = await authorService.GetAuthor(article.AuthorId, cancellationToken);
-                return new ArticleResponse(article,author);
-            })
-        );
+        var articleResponses = new List<ArticleResponse>();
+        foreach(var article in articles ){
+            var author = await authorService.GetAuthor(article.AuthorId, cancellationToken);
+            articleResponses.Add(new ArticleResponse(article,author));
+        }
 
         return new ArticlesResponse(articleResponses.ToArray(), totalArticles);
     }
