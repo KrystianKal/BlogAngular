@@ -45,13 +45,9 @@ public class CreateArticleCommandHandler(BlogDbContext context, IUserAccessor us
         var authorId = Guid.Parse(userAccessor.GetCurrentUserId()!);
 
 
-        var article = new Article
-        {
-            AuthorId = authorId,
-            Title = request.Article.Title,
-            Body = request.Article.Body,
-            Description = request.Article.Description,
-        };
+        var article =
+            Article.CreateNew(
+                authorId,request.Article.Title, request.Article.Description, request.Article.Body );
 
         var articleAlreadyExists = context.Articles.Any(x => x.Slug.Equals(article.Slug));
 
