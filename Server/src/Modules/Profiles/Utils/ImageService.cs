@@ -14,10 +14,10 @@ public class ImageService(IWebHostEnvironment env) : IImageService
         {
             Directory.CreateDirectory(_uploadFolder);
         }
-        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+        var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
         var filePath = Path.Combine(_uploadFolder, fileName);
 
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        await using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
 
             await file.CopyToAsync(fileStream, cancellationToken);
