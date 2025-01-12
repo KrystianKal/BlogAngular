@@ -2,5 +2,5 @@
 
 namespace BlogBackend.Modules.Common.Exceptions;
 
-public class CurrentUserIsNotTheOwnerOfThisResource(object? Errors)
-    : ApiException(HttpStatusCode.Unauthorized, Errors);
+public class CurrentUserIsNotTheOwnerOfThisResource(object? errors)
+    : ApiException(HttpStatusCode.Unauthorized, errors);

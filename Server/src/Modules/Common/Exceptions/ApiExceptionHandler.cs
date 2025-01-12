@@ -13,12 +13,11 @@ public class ApiExceptionHandler : IExceptionHandler
 
         switch (exception)
         {
-            case ApiException _:
-                httpContext.Response.StatusCode = (int)(exception as ApiException).StatusCode;
-                errors = (exception as ApiException).Errors;
+            case ApiException apiException:
+                httpContext.Response.StatusCode = (int)apiException.StatusCode;
+                errors = apiException.Errors;
                 break;
-            case ValidationException _:
-                var validationException = exception as ValidationException;
+            case ValidationException validationException:
                 httpContext.Response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
                 errors = validationException.Errors
                     .GroupBy(x => x.PropertyName)
@@ -30,7 +29,7 @@ public class ApiExceptionHandler : IExceptionHandler
         }
 
         httpContext.Response.ContentType = "application/json";
-        await httpContext.Response.WriteAsync(JsonSerializer.Serialize(new { errors }));
+        await httpContext.Response.WriteAsync(JsonSerializer.Serialize(new { errors }), cancellationToken);
 
         return true;
     }
