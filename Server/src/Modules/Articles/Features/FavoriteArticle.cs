@@ -30,7 +30,7 @@ public class FavoriteArticleCommandHandler(BlogDbContext context, IUserAccessor 
         var articleToFavorite = await context.Articles
             .Include(x => x.ArticleFavoriteds)
             .Include(x => x.Tags)
-            .SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug));
+            .SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug), cancellationToken: cancellationToken);
 
         if (articleToFavorite is null)
         {
@@ -45,6 +45,6 @@ public class FavoriteArticleCommandHandler(BlogDbContext context, IUserAccessor 
         await context.SaveChangesAsync(cancellationToken);
 
         var author = await authorService.GetAuthor(articleToFavorite.AuthorId, cancellationToken);
-        return new ArticleResponse(articleToFavorite, author,true);
+        return ArticleResponse.Create(articleToFavorite, author,true);
     }
 }

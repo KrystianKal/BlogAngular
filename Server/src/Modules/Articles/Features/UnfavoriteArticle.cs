@@ -30,7 +30,7 @@ public class UnfavoriteArticleCommandHandler(BlogDbContext context, IUserAccesso
     public async Task<ArticleResponse> Handle(UnfavoriteArticleCommand request, CancellationToken cancellationToken)
     {
         var article = await context.Articles
-            .Include(x => x.ArticleFavoriteds)
+            .Include(x => x.ArticleFavoriteds).ThenInclude(articleFavorited => articleFavorited.UserId)
             .Include(x=> x.Tags)
             .SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug), cancellationToken);
 
@@ -52,6 +52,6 @@ public class UnfavoriteArticleCommandHandler(BlogDbContext context, IUserAccesso
         await context.SaveChangesAsync(cancellationToken);
 
         var author = await authorService.GetAuthor(article.AuthorId, cancellationToken);
-        return new ArticleResponse(article, author,false);
+        return ArticleResponse.Create(article, author,false);
     }
 }

@@ -57,7 +57,7 @@ public class EditArticleCommandHandler(IUserAccessor userAccessor, BlogDbContext
     public async Task<ArticleResponse> Handle(EditArticleCommand request, CancellationToken cancellationToken)
     {
         var currentArticle = await context.Articles
-            .SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug));
+            .SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug), cancellationToken: cancellationToken);
 
         if (currentArticle is null)
         {
@@ -76,9 +76,9 @@ public class EditArticleCommandHandler(IUserAccessor userAccessor, BlogDbContext
         currentArticle.UpdatedAt = DateTime.UtcNow;
 
         context.Articles.Update(currentArticle);
-        context.SaveChanges();
+        await context.SaveChangesAsync(cancellationToken);
 
         var author = await authorService.GetAuthor(currentArticle.AuthorId,cancellationToken);
-        return new ArticleResponse(currentArticle, author);
+        return ArticleResponse.Create(currentArticle, author);
     }
 }

@@ -78,7 +78,7 @@ public class ListArticlesQueryHandler(BlogDbContext context, IUserAccessor userA
             bool? isFavorited = currentUserId is null
                 ? null
                 : article.ArticleFavoriteds.Any(x => x.UserId == UserId.Parse(currentUserId));
-            articleResponses.Add(new ArticleResponse(article, author, isFavorited));
+            articleResponses.Add(ArticleResponse.Create(article, author, isFavorited));
         }
 
         return new ArticlesResponse(articleResponses.ToArray(), totalArticles );

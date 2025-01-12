@@ -43,11 +43,11 @@ public class CreateArticleCommandHandler(BlogDbContext context, IUserAccessor us
     public async Task<ArticleResponse> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
     {
         var authorId = Guid.Parse(userAccessor.GetCurrentUserId()!);
-
-
-        var article =
-            Article.CreateNew(
-                authorId,request.Article.Title, request.Article.Description, request.Article.Body );
+        
+        var article = Article.CreateNew(authorId,
+            request.Article.Title,
+            request.Article.Description,
+            request.Article.Body);
 
         var articleAlreadyExists = context.Articles.Any(x => x.Slug.Equals(article.Slug));
 
@@ -55,7 +55,7 @@ public class CreateArticleCommandHandler(BlogDbContext context, IUserAccessor us
         {
             throw new ApiException(
                 System.Net.HttpStatusCode.BadRequest,
-                new { article = $"Article with slug: \"{article.Slug}\"  already exists" }
+                new { article = $"Article with slug: \"{article.Slug}\" already exists" }
                 );
         }
 
@@ -80,7 +80,7 @@ public class CreateArticleCommandHandler(BlogDbContext context, IUserAccessor us
         await context.SaveChangesAsync(cancellationToken);
 
         var author = await authorService.GetAuthor(authorId,cancellationToken);
-        return new ArticleResponse(article, author);
+        return ArticleResponse.Create(article, author);
 
     }
 

@@ -9,13 +9,9 @@ public class CreateProfileCommandHandler(BlogDbContext context)
 {
     public async Task<bool> Handle(CreateProfileCommand request, CancellationToken cancellationToken)
     {
-        var profile = new Profile
-        {
-            ProfileName = request.Name,
-            UserId = request.UserId
-        };
+        var profile = Profile.CreateNew(request.Name,request.UserId);
         await context.Profiles.AddAsync(profile, cancellationToken);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
         return true;
     }
 }

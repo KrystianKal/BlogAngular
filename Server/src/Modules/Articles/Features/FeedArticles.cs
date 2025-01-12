@@ -49,7 +49,7 @@ public class FeedArticlesQueryHandler(BlogDbContext context, IUserAccessor userA
         var articleResponses = new List<ArticleResponse>();
         foreach(var article in articles ){
             var author = await authorService.GetAuthor(article.AuthorId, cancellationToken);
-            articleResponses.Add(new ArticleResponse(article,author));
+            articleResponses.Add(ArticleResponse.Create(article,author));
         }
 
         return new ArticlesResponse(articleResponses.ToArray(), totalArticles);

@@ -42,11 +42,11 @@ public class GetArticleQueryHandler(BlogDbContext context, IUserAccessor userAcc
 
         if (currentUserId == null)
         {
-            return new ArticleResponse(article, author);
+            return ArticleResponse.Create(article, author);
         }
 
         var isFavorited = article.ArticleFavoriteds.Any(x => x.UserId == UserId.Parse(currentUserId));
 
-        return new ArticleResponse(article, author, isFavorited);
+        return ArticleResponse.Create(article, author, isFavorited);
     }
 }
