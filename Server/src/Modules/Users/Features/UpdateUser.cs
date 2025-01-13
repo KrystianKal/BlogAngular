@@ -39,14 +39,7 @@ public class UpdateUserCommandHandler(BlogDbContext context, IUserAccessor userA
 {
     public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = userAccessor.GetCurrentUserId()!;
-        var currentUser = await context.Users.SingleOrDefaultAsync(x => x.UserId == UserId.Parse(currentUserId));
-        if (currentUser == null)
-        {
-            throw new ApiException(System.Net.HttpStatusCode.InternalServerError,
-                new { User = "not found." });
-        }
-
+        var currentUser = await userAccessor.GetCurrentUser(cancellationToken);
         currentUser.Email = request.User.Email ?? currentUser.Email;
         currentUser.Name = request.User.Username ?? currentUser.Name;
         currentUser.Password = request.User.Password is not null

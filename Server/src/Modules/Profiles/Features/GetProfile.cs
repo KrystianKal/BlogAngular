@@ -20,7 +20,8 @@ public class GetProfileController(IMediator mediator) : ControllerBase
 
 public record GetProfileQuery(string UserName) : IRequest<ProfileResponse>;
 
-public class GetProfileQueryHandler(BlogDbContext context, IUserAccessor userAccessor) : IRequestHandler<GetProfileQuery, ProfileResponse>
+public class GetProfileQueryHandler(BlogDbContext context, IUserAccessor userAccessor) 
+    : IRequestHandler<GetProfileQuery, ProfileResponse>
 {
     public async Task<ProfileResponse> Handle(GetProfileQuery request, CancellationToken cancellationToken)
     {
@@ -36,8 +37,7 @@ public class GetProfileQueryHandler(BlogDbContext context, IUserAccessor userAcc
         var isFollowing = await context.Profiles.AsNoTracking()
             .Include(x => x.Following)
             .AnyAsync(p => p.UserId == UserId.Parse(currentUserId)
-            && p.Following.Any(f => f.FollowingId == profile.ProfileId));
-
+            && p.Following.Any(f => f.FollowingId == profile.ProfileId), cancellationToken: cancellationToken);
 
         return ProfileResponse.From(profile, isFollowing);
     }

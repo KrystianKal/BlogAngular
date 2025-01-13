@@ -57,20 +57,13 @@ public class UploadProfilePictureCommandHandler(BlogDbContext context,IUserAcces
 {
     public async Task<string> Handle(UploadProfilePictureCommand request, CancellationToken cancellationToken)
     {
-        //get current user
-        var currentUserId = userAccessor.GetCurrentUserId()!;
-        var currentUserProfile = await context.Profiles
-            .SingleOrDefaultAsync(x => x.UserId.Equals(UserId.Parse(currentUserId)), cancellationToken);
-        if (currentUserProfile == null)
-        {
-            throw new ProfileNotFoundException(currentUserId);
-        }
+        var currentUser = await userAccessor.GetCurrentUser(cancellationToken);
+        var currentUserProfile = await ProfileHelper.GetUserProfile(currentUser.Name,context,cancellationToken);
 
         if (currentUserProfile.Image != null)
         {
             imageService.Delete(currentUserProfile.Image);
         }
-
 
         var fileUrl = await imageService.Upload(request.File, cancellationToken);
 

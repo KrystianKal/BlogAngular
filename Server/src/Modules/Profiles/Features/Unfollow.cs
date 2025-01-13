@@ -15,7 +15,7 @@ namespace BlogBackend.Modules.Profiles.Features;
 public class UnfollowController(IMediator mediator) : ControllerBase
 {
     [HttpDelete("{userName}/follow")]
-    public async Task<ActionResult<ProfileResponse>> Unollow(string userName, CancellationToken cancellationToken)
+    public async Task<ActionResult<ProfileResponse>> Unfollow(string userName, CancellationToken cancellationToken)
         => Ok(await mediator.Send(new UnfollowCommand(userName), cancellationToken));
 }
 public record UnfollowCommand(string UserName) : IRequest<ProfileResponse>;
@@ -26,30 +26,26 @@ public class UnfollowCommandHandler(BlogDbContext context, IUserAccessor userAcc
     public async Task<ProfileResponse> Handle(UnfollowCommand request, CancellationToken cancellationToken)
     {
         var profileToUnfollow = await ProfileHelper.GetUserProfile(request.UserName, context, cancellationToken);
-        var currentUserId = userAccessor.GetCurrentUserId()!;
+        var currentUser = await userAccessor.GetCurrentUser(cancellationToken);
 
-        if (profileToUnfollow.UserId == UserId.Parse(currentUserId))
+        if (profileToUnfollow.UserId.Equals(currentUser.UserId))
         {
             throw new ApiException(System.Net.HttpStatusCode.BadRequest,
-                new { Profile = "Cannot unfollow itself" });
+                new { Profile = "Cannot unfollow yourself" });
         }
 
         var currentUserProfile = await context.Profiles
             .Include(x => x.Following)
-            .SingleOrDefaultAsync(x => x.UserId == UserId.Parse(currentUserId), cancellationToken);
+            .SingleOrDefaultAsync(x => x.UserId.Equals(currentUser.UserId), cancellationToken);
 
-        if (currentUserProfile is null)
-        {
-            throw new ProfileNotFoundException(currentUserId);
-        }
-
+        ProfileNotFoundException.ThrowIfNull(currentUserProfile, currentUser.UserId );
         var profileFollow = currentUserProfile.Following
             .SingleOrDefault(x => x.FollowingId == profileToUnfollow.ProfileId);
 
         if (profileFollow is null)
         {
             throw new ApiException(System.Net.HttpStatusCode.BadRequest,
-                new { Profile = "Profile to unfollow is not being followed" });
+                new { Profile = "Profile to unfollow is not followed" });
         }
 
         currentUserProfile.Following.Remove(profileFollow);

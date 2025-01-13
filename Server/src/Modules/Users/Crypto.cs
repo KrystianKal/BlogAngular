@@ -21,10 +21,7 @@ public static class Crypto
 
     public static string HashPassword(string password)
     {
-        if (password == null)
-        {
-            throw new ArgumentNullException("password");
-        }
+        ArgumentNullException.ThrowIfNull(password);
 
         // Produce a version 0 (see comment above) text hash.
         byte[] salt;
@@ -48,10 +45,7 @@ public static class Crypto
         {
             return false;
         }
-        if (password == null)
-        {
-            throw new ArgumentNullException("password");
-        }
+        ArgumentNullException.ThrowIfNull(password);
 
         var hashedPasswordBytes = Convert.FromBase64String(hashedPassword);
 

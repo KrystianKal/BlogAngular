@@ -18,9 +18,9 @@ public record UpdateProfileRequest(string? Name, string? Bio, string? Image);
 public class UpdateProfileController(IMediator mediator) : ControllerBase
 {
     [HttpPatch]
-    public async Task<ActionResult<ProfileResponse>> Update( [FromBody] UpdateProfileRequest Profile,
+    public async Task<ActionResult<ProfileResponse>> Update( [FromBody] UpdateProfileRequest profile,
                                                             CancellationToken cancellationToken)
-        => Ok(await mediator.Send(new UpdateProfileCommand(Profile), cancellationToken));
+        => Ok(await mediator.Send(new UpdateProfileCommand(profile), cancellationToken));
 }
 
 public record UpdateProfileCommand(UpdateProfileRequest Profile) : IRequest<ProfileResponse>;
@@ -51,14 +51,11 @@ public class UpdateProfileCommandHandler(BlogDbContext context,IImageService ima
 {
     public async Task<ProfileResponse> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = userAccessor.GetCurrentUserId()!;
+        var currentUser = await userAccessor.GetCurrentUser(cancellationToken);
         var profile = await context.Profiles
-            .SingleOrDefaultAsync(x => x.UserId.Equals(UserId.Parse(currentUserId)), cancellationToken);
-        if (profile == null)
-        {
-            throw new ProfileNotFoundException(currentUserId);
-        }
-
+            .SingleOrDefaultAsync(x => x.UserId.Equals(currentUser.UserId), cancellationToken);
+        ProfileNotFoundException.ThrowIfNull(profile,currentUser.UserId);
+        
         profile.ProfileName = request.Profile.Name ?? profile.ProfileName;
         profile.Bio = request.Profile.Bio ?? profile.Bio;
         if(request.Profile.Image is not null)

@@ -40,7 +40,7 @@ public class Article
     public DateTime CreatedAt { get; init; }
     public DateTime? UpdatedAt { get; set; }
     public int FavoritesCount { get; private set; }
-    public List<ArticleFavorited> ArticleFavoriteds { get; } = new();
+    public List<ArticleFavorited> ArticleFavoriteds { get; } = [];
 
     public void Favorite(UserId userId)
     {

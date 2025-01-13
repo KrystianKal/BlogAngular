@@ -43,21 +43,21 @@ public class RegisterCommandHandler(BlogDbContext context, IMediator mediator)
         var emailAlreadyTaken = await context.Users.AsNoTracking()
             .AnyAsync(x => x.Email == userEmail, cancellationToken);
         var nameAlreadyTaken = await context.Users.AsNoTracking()
-            .AnyAsync(x => x.Name.ToLower() == request.user.Username.ToLower(), cancellationToken);
+            .AnyAsync(x => x.Name.Equals(request.user.Username, StringComparison.CurrentCultureIgnoreCase), cancellationToken);
 
         Dictionary<string,string> errors = new();
         if (emailAlreadyTaken)
         {
-            errors.Add("email",  "Already taken");
+            errors.Add("Email",  "Already taken");
         }
         if (nameAlreadyTaken)
         {
-            errors.Add("name",  "Already taken");
+            errors.Add("Name",  "Already taken");
         }
-        if(errors.Any()){
+        if(errors.Count != 0)
+        {
             throw new ApiException(System.Net.HttpStatusCode.BadRequest,  errors );
         }
-
 
         var user = new User
         {
@@ -66,13 +66,13 @@ public class RegisterCommandHandler(BlogDbContext context, IMediator mediator)
             Password = Crypto.HashPassword(request.user.Password)
         };
 
-        await context.Users.AddAsync(user);
+        await context.Users.AddAsync(user, cancellationToken);
 
-        var profileCreated = await mediator.Send(new CreateProfileCommand(user.UserId, user.Name));
+        var profileCreated = await mediator.Send(new CreateProfileCommand(user.UserId, user.Name), cancellationToken);
 
         if (profileCreated)
         {
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
         else
         {

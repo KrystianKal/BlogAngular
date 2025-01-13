@@ -4,11 +4,11 @@ public class ProfileFollow
 {
     public DateTime FollowedAt { get; init; } = DateTime.UtcNow;
 
-    public ProfileId FollowerId { get; set; }
-    public Profile Follower { get; set; }
+    public ProfileId FollowerId { get; init; }
+    public Profile Follower { get; init; }
 
-    public ProfileId FollowingId { get; set; }
-    public Profile Following { get; set; }
+    public ProfileId FollowingId { get; init; }
+    public Profile Following { get; init; }
 
     private ProfileFollow() { }
 

@@ -47,7 +47,7 @@ public class AddCommentCommandHandler(BlogDbContext context, IUserAccessor userA
             AuthorId = authorId
         };
 
-        var article = await context.Articles.SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug));
+        var article = await context.Articles.SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug), cancellationToken: cancellationToken);
 
         if (article is null)
         {

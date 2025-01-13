@@ -1,9 +1,9 @@
 ﻿namespace BlogBackend.Modules.Profiles.Features;
 
-public record ProfileResponse(string Name, string Bio, string Image, bool? Following = null)
+public record ProfileResponse(string Name, string? Bio, string? Image, bool? Following = null)
 {
-    public static ProfileResponse From(Profile profile, bool? Following = null)
+    public static ProfileResponse From(Profile profile, bool? following = null)
     {
-        return new ProfileResponse(profile.ProfileName, profile.Bio, profile.Image?.Value, Following);
+        return new ProfileResponse(profile.ProfileName, profile.Bio, profile.Image?.Value, following);
     }
 };

@@ -26,23 +26,21 @@ public class FollowCommandHandler(BlogDbContext context, IUserAccessor userAcces
     public async Task<ProfileResponse> Handle(FollowCommand request, CancellationToken cancellationToken)
     {
         var profileToFollow = await ProfileHelper.GetUserProfile(request.UserName, context, cancellationToken);
-        var currentUserId = userAccessor.GetCurrentUserId()!;
+        var currentUser = await userAccessor.GetCurrentUser(cancellationToken);
 
-        if (profileToFollow.UserId == UserId.Parse(currentUserId))
+        if (profileToFollow.UserId.Equals(currentUser.UserId))
         {
-            throw new ApiException(System.Net.HttpStatusCode.BadRequest, new { Profile = "Cannot follow itself" });
+            throw new ApiException(System.Net.HttpStatusCode.BadRequest, new { Profile = "Cannot follow yourself" });
         }
 
-        var currentUserProfile = await context.Profiles.SingleOrDefaultAsync(x => x.UserId == UserId.Parse(currentUserId), cancellationToken);
-        if (currentUserProfile is null)
-        {
-            throw new ProfileNotFoundException(currentUserId);
-        }
+        var currentUserProfile = await context.Profiles.SingleOrDefaultAsync(x => x.UserId == currentUser.UserId
+            ,cancellationToken);
+        
+        ProfileNotFoundException.ThrowIfNull(currentUserProfile, currentUser.UserId);
 
         profileToFollow.Followers.Add(new ProfileFollow(currentUserProfile, profileToFollow));
         context.Profiles.Update(profileToFollow);
         await context.SaveChangesAsync(cancellationToken);
         return ProfileResponse.From(profileToFollow, true);
-
     }
 }
