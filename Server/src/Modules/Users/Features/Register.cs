@@ -2,7 +2,9 @@
 using BlogBackend.Modules.Profiles.Shared;
 using BlogBackend.Modules.Common;
 using BlogBackend.Modules.Common.Database;
-using BlogBackend.Modules.Users;
+using BlogBackend.Modules.Users.Exceptions;
+using static BlogBackend.Modules.Users.PasswordPolicyModule;
+
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +19,7 @@ public class Register(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<UserResponse>> Post([FromBody] RegisterCommand command, CancellationToken cancellationToken)
-    {
-        return Created("", await mediator.Send(command, cancellationToken));
-    }
+        => Created("", await mediator.Send(command, cancellationToken));
 }
 
 public record RegisterCommand(RegisterRequest user) : IRequest<UserResponse>;
@@ -57,6 +57,19 @@ public class RegisterCommandHandler(BlogDbContext context, IMediator mediator)
         if(errors.Count != 0)
         {
             throw new ApiException(System.Net.HttpStatusCode.BadRequest,  errors );
+        }
+
+        var password = request.user.Password;
+        PasswordPolicy[] policies =
+        [
+            AtLeast(5),
+            ContainsLowerLetter,
+            ContainsUpperLetter
+        ];
+        var isValid = policies.ExecuteFor(password);
+        if (!isValid)
+        {
+            throw new InvalidPasswordException();
         }
 
         var user = new User

@@ -48,15 +48,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
 }
 
-
-app.UseExceptionHandler(new ExceptionHandlerOptions()
+app.UseExceptionHandler(new ExceptionHandlerOptions
 {
     ExceptionHandlingPath = "/api"
 });
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
-
 
 app.MapControllers();
 
