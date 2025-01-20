@@ -12,7 +12,7 @@ public static class ProfileHelper
     public static async Task<Profile> GetUserProfile(string userName, BlogDbContext context, CancellationToken cancellationToken)
     {
         var profileOwner = await context.Users.AsNoTracking()
-            .SingleOrDefaultAsync(x => x.Name.Equals(userName, StringComparison.CurrentCultureIgnoreCase), cancellationToken);
+            .SingleOrDefaultAsync(x => x.Name.ToLower() ==  userName.ToLower(), cancellationToken);
         
         UserNotFoundException.ThrowIfNull(profileOwner,userName);
         

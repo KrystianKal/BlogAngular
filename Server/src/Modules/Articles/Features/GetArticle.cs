@@ -27,7 +27,7 @@ public class GetArticleQueryHandler(BlogDbContext context, IUserAccessor userAcc
     public async Task<ArticleResponse> Handle(GetArticleQuery request, CancellationToken cancellationToken)
     {
         var article = await context.Articles
-            .Include(x => x.ArticleFavoriteds).ThenInclude(articleFavorited => articleFavorited.UserId)
+            .Include(x => x.ArticleFavoriteds)
             .Include(x => x.Tags)
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Slug.Equals(request.Slug), cancellationToken);
