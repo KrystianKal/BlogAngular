@@ -4,10 +4,9 @@ import { AuthorHeaderComponent } from '../../../../author-header/author-header.c
 import { AuthService } from '../../../../shared/auth.service';
 
 @Component({
-  selector: 'app-comment',
-  standalone: true,
-  imports: [AuthorHeaderComponent],
-  template: `<div class="flex flex-col bg-slate-50  rounded ">
+    selector: 'app-comment',
+    imports: [AuthorHeaderComponent],
+    template: `<div class="flex flex-col bg-slate-50  rounded ">
     <p class="p-4">
       {{ comment().body }}
     </p>
@@ -28,7 +27,7 @@ import { AuthService } from '../../../../shared/auth.service';
       </button>
       }
     </div>
-  </div> `,
+  </div> `
 })
 export class CommentComponent {
   comment = input.required<Comment>();

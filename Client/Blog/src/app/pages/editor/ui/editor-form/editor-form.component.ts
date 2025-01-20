@@ -23,18 +23,17 @@ import {
 import { getErrorMessage } from '../../../../shared/utils/form-validation.utils';
 
 @Component({
-  selector: 'app-editor-form',
-  standalone: true,
-  imports: [
-    MatChipsModule,
-    FormsModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    NgIf,
-    MatInputModule,
-  ],
-  templateUrl: './editor-form.component.html',
+    selector: 'app-editor-form',
+    imports: [
+        MatChipsModule,
+        FormsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        NgIf,
+        MatInputModule,
+    ],
+    templateUrl: './editor-form.component.html'
 })
 export class EditorFormComponent {
   http = inject(HttpClient);

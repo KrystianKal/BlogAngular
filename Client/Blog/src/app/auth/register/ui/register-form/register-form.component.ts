@@ -13,19 +13,18 @@ import {
 } from '../../../../shared/utils/form-validation.utils';
 
 @Component({
-  selector: 'app-register-form',
-  standalone: true,
-  imports: [
-    MatFormField,
-    MatLabel,
-    MatIcon,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    MatButtonModule,
-    MatError,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './register-form.component.html',
+    selector: 'app-register-form',
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatIcon,
+        MatProgressSpinnerModule,
+        MatInputModule,
+        MatButtonModule,
+        MatError,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './register-form.component.html'
 })
 export class RegisterFormComponent {
   private fb = inject(FormBuilder);

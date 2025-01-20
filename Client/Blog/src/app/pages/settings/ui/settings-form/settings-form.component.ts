@@ -21,19 +21,18 @@ import { catchError, Observable, of, switchMap } from 'rxjs';
 import { AvatarComponent } from '../../../../avatar/avatar.component';
 
 @Component({
-  selector: 'app-settings-form',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatIconModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgIf,
-    MatInputModule,
-    MatButtonModule,
-    AvatarComponent,
-  ],
-  templateUrl: './settings-form.component.html',
+    selector: 'app-settings-form',
+    imports: [
+        MatFormFieldModule,
+        MatIconModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatInputModule,
+        MatButtonModule,
+        AvatarComponent,
+    ],
+    templateUrl: './settings-form.component.html'
 })
 export class SettingsFormComponent {
   currentProfile = input.required<Profile>();

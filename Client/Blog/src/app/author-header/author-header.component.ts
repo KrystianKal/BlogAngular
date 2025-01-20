@@ -13,17 +13,16 @@ type CreatedAt =
     }
   | undefined;
 @Component({
-  selector: 'app-author-header',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    RouterLink,
-    NgIf,
-    AuthorHeaderComponent,
-    DatePipe,
-    AvatarComponent,
-  ],
-  templateUrl: './author-header.component.html',
+    selector: 'app-author-header',
+    imports: [
+        MatCardModule,
+        RouterLink,
+        NgIf,
+        AuthorHeaderComponent,
+        DatePipe,
+        AvatarComponent,
+    ],
+    templateUrl: './author-header.component.html'
 })
 export class AuthorHeaderComponent {
   author = input.required<Author>();

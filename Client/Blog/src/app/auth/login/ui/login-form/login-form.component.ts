@@ -17,19 +17,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { getErrorMessage } from '../../../../shared/utils/form-validation.utils';
 
 @Component({
-  selector: 'app-login-form',
-  standalone: true,
-  imports: [
-    MatFormField,
-    MatLabel,
-    MatIcon,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    MatButtonModule,
-    MatError,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './login-form.component.html',
+    selector: 'app-login-form',
+    imports: [
+        MatFormField,
+        MatLabel,
+        MatIcon,
+        MatProgressSpinnerModule,
+        MatInputModule,
+        MatButtonModule,
+        MatError,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
   fb = inject(FormBuilder);

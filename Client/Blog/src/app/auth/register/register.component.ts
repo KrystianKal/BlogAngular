@@ -8,10 +8,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from '../login/service/login.service';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [RegisterFormComponent, RouterLink],
-  templateUrl: './register.component.html',
+    selector: 'app-register',
+    imports: [RegisterFormComponent, RouterLink],
+    templateUrl: './register.component.html'
 })
 export class RegisterComponent {
   private router = inject(Router);

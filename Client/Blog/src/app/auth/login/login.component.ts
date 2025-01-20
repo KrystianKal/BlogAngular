@@ -6,10 +6,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [LoginFormComponent, RouterLink, MatProgressSpinnerModule],
-  templateUrl: './login.component.html',
+    selector: 'app-login',
+    imports: [LoginFormComponent, RouterLink, MatProgressSpinnerModule],
+    templateUrl: './login.component.html'
 })
 export class LoginComponent {
   public loginService = inject(LoginService);

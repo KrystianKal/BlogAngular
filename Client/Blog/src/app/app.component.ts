@@ -4,16 +4,15 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    HeaderComponent,
-    FooterComponent,
-  ],
-  templateUrl: './app.component.html',
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        HeaderComponent,
+        FooterComponent,
+    ],
+    templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'Blog';

@@ -31,10 +31,9 @@ interface EditorState {
 }
 
 @Component({
-  selector: 'app-editor',
-  standalone: true,
-  imports: [EditorFormComponent, MatDivider, EditorPreviewComponent],
-  templateUrl: './editor.component.html',
+    selector: 'app-editor',
+    imports: [EditorFormComponent, MatDivider, EditorPreviewComponent],
+    templateUrl: './editor.component.html'
 })
 export class EditorComponent {
   @Input('slug') slug = '';

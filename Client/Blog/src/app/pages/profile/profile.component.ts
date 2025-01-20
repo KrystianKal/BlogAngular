@@ -11,18 +11,17 @@ import { ProfileTabsComponent } from './ui/profile-tabs/profile-tabs.component';
 import { AvatarComponent } from '../../avatar/avatar.component';
 
 @Component({
-  selector: 'app-profile',
-  standalone: true,
-  imports: [
-    NgIf,
-    MatProgressSpinnerModule,
-    FollowComponent,
-    ProfileTabsComponent,
-    AvatarComponent,
-  ],
-  templateUrl: './profile.component.html',
-  styles: [
-    `
+    selector: 'app-profile',
+    imports: [
+        NgIf,
+        MatProgressSpinnerModule,
+        FollowComponent,
+        ProfileTabsComponent,
+        AvatarComponent,
+    ],
+    templateUrl: './profile.component.html',
+    styles: [
+        `
       .profile-avatar::after,
       .profile-avatar::before {
         content: '';
@@ -60,7 +59,7 @@ import { AvatarComponent } from '../../avatar/avatar.component';
         opacity: 0.6;
       }
     `,
-  ],
+    ]
 })
 export class ProfileComponent {
   private profileService = inject(ProfileService);

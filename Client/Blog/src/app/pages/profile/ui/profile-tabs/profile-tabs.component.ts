@@ -19,17 +19,16 @@ interface ArticlesState {
 }
 
 @Component({
-  selector: 'app-profile-tabs',
-  standalone: true,
-  imports: [
-    ArticlePreviewComponent,
-    MatTabsModule,
-    NgIf,
-    AsyncPipe,
-    MatProgressSpinner,
-    PaginationComponent,
-  ],
-  templateUrl: './profile-tabs.component.html',
+    selector: 'app-profile-tabs',
+    imports: [
+        ArticlePreviewComponent,
+        MatTabsModule,
+        NgIf,
+        AsyncPipe,
+        MatProgressSpinner,
+        PaginationComponent,
+    ],
+    templateUrl: './profile-tabs.component.html'
 })
 export class ProfileTabsComponent {
   username = input.required<string>();

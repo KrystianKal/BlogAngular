@@ -15,10 +15,9 @@ interface TagsState {
 }
 
 @Component({
-  selector: 'app-tags',
-  standalone: true,
-  imports: [MatProgressSpinnerModule, MatChipsModule, AsyncPipe, NgIf],
-  templateUrl: './tags.component.html',
+    selector: 'app-tags',
+    imports: [MatProgressSpinnerModule, MatChipsModule, AsyncPipe, NgIf],
+    templateUrl: './tags.component.html'
 })
 export class TagsComponent {
   private http = inject(HttpClient);

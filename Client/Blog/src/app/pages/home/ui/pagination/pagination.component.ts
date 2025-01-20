@@ -2,10 +2,9 @@ import { Component, effect, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-pagination',
-  standalone: true,
-  imports: [MatIconModule],
-  templateUrl: './pagination.component.html',
+    selector: 'app-pagination',
+    imports: [MatIconModule],
+    templateUrl: './pagination.component.html'
 })
 export class PaginationComponent {
   itemCount = input.required<number>();

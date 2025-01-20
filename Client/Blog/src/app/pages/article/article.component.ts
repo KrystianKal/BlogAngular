@@ -13,22 +13,21 @@ import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-article',
-  standalone: true,
-  imports: [
-    AuthorHeaderComponent,
-    ArticleSocialsComponent,
-    FollowComponent,
-    CommentsComponent,
-    NgIf,
-    MatProgressSpinner,
-    MatChip,
-    NgClass,
-    AsyncPipe,
-    MatDivider,
-    MarkedPipe,
-  ],
-  templateUrl: './article.component.html',
+    selector: 'app-article',
+    imports: [
+        AuthorHeaderComponent,
+        ArticleSocialsComponent,
+        FollowComponent,
+        CommentsComponent,
+        NgIf,
+        MatProgressSpinner,
+        MatChip,
+        NgClass,
+        AsyncPipe,
+        MatDivider,
+        MarkedPipe,
+    ],
+    templateUrl: './article.component.html'
 })
 export class ArticleComponent {
   @Input('slug') slug = '';

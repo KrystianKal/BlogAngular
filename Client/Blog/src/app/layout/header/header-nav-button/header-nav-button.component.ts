@@ -4,10 +4,9 @@ import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-header-nav-button',
-  standalone: true,
-  imports: [NgClass, MatIcon, RouterLink],
-  template: `
+    selector: 'app-header-nav-button',
+    imports: [NgClass, MatIcon, RouterLink],
+    template: `
     <a
       [ngClass]="
         this.router.url === link()
@@ -20,7 +19,7 @@ import { Router, RouterLink } from '@angular/router';
       <mat-icon>{{ icon() }}</mat-icon>
       <ng-content />
     </a>
-  `,
+  `
 })
 export class HeaderNavButtonComponent {
   link = input.required<string>();

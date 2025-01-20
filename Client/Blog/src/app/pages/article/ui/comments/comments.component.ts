@@ -17,19 +17,18 @@ import { AuthService } from '../../../../shared/auth.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-comments',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    NgIf,
-    MatButtonModule,
-    FormsModule,
-    MatInputModule,
-    RouterLink,
-    CommentComponent,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './comments.component.html',
+    selector: 'app-comments',
+    imports: [
+        MatFormFieldModule,
+        NgIf,
+        MatButtonModule,
+        FormsModule,
+        MatInputModule,
+        RouterLink,
+        CommentComponent,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './comments.component.html'
 })
 export class CommentsComponent {
   slug = input.required<string>();

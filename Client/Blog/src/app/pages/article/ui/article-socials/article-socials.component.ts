@@ -5,10 +5,9 @@ import { Article } from '../../../../shared/models/article.model';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-article-socials',
-  standalone: true,
-  imports: [MatIconModule, NgClass],
-  templateUrl: './article-socials.component.html',
+    selector: 'app-article-socials',
+    imports: [MatIconModule, NgClass],
+    templateUrl: './article-socials.component.html'
 })
 export class ArticleSocialsComponent {
   article = input.required<Article>();

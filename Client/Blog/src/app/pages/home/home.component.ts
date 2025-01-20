@@ -21,18 +21,17 @@ interface ArticlesState {
 }
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    ArticlePreviewComponent,
-    MatTabsModule,
-    NgIf,
-    AsyncPipe,
-    MatProgressSpinner,
-    TagsComponent,
-    PaginationComponent,
-  ],
-  templateUrl: './home.component.html',
+    selector: 'app-home',
+    imports: [
+        ArticlePreviewComponent,
+        MatTabsModule,
+        NgIf,
+        AsyncPipe,
+        MatProgressSpinner,
+        TagsComponent,
+        PaginationComponent,
+    ],
+    templateUrl: './home.component.html'
 })
 export class HomeComponent {
   private articleService = inject(ArticlesService);

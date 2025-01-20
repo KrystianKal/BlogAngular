@@ -6,10 +6,9 @@ import { RouterLink } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
-  selector: 'app-article-preview',
-  standalone: true,
-  imports: [MatCardModule, RouterLink, MatChipsModule, AuthorHeaderComponent],
-  templateUrl: './article-preview.component.html',
+    selector: 'app-article-preview',
+    imports: [MatCardModule, RouterLink, MatChipsModule, AuthorHeaderComponent],
+    templateUrl: './article-preview.component.html'
 })
 export class ArticlePreviewComponent {
   @Input({ required: true })

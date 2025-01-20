@@ -22,10 +22,9 @@ type SettingsState = {
   isLoading: boolean;
 };
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [MatProgressSpinnerModule, SettingsFormComponent],
-  templateUrl: './settings.component.html',
+    selector: 'app-settings',
+    imports: [MatProgressSpinnerModule, SettingsFormComponent],
+    templateUrl: './settings.component.html'
 })
 export class SettingsComponent {
   private authService = inject(AuthService);

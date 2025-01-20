@@ -14,10 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-follow',
-  standalone: true,
-  imports: [NgIf, MatIconModule, NgClass],
-  templateUrl: './follow.component.html',
+    selector: 'app-follow',
+    imports: [NgIf, MatIconModule, NgClass],
+    templateUrl: './follow.component.html'
 })
 export class FollowComponent {
   username = input.required<string>();
