@@ -1,7 +1,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { LoginFormComponent } from './ui/login-form/login-form.component';
-import { LoginService } from './service/login.service';
+import { LoginService } from './login.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 

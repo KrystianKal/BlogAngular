@@ -1,11 +1,10 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, Credentials } from '../../shared/auth.service';
+import {Credentials } from '../../shared/auth.service';
 import { RegisterFormComponent } from './ui/register-form/register-form.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RegisterService } from './service/register.service';
+import { RegisterService } from './register.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LoginService } from '../login/service/login.service';
+import { LoginService } from '../login/login.service';
 
 @Component({
     selector: 'app-register',

@@ -28,13 +28,13 @@
           } }
           <app-pagination
             [itemCount]="articles.articleCount"
-            [pageSize]="(this.limit | async) || 0"
-            [page]="(this.currentPage | async) || 0"
+            [pageSize]="(limit | async) || 0"
+            [page]="(currentPage | async) || 0"
             (pageChanged)="onPageChange($event)"
           ></app-pagination>
         </div>
         <ng-template #loading>
-          <mat-spinner diameter="50" />
+          <mat-spinner diameter="50"></mat-spinner>
         </ng-template>
       </div>
     </mat-tab>

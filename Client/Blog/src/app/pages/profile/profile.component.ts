@@ -1,14 +1,14 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ProfileService } from '../article/ui/article-socials/profile.service';
+import {ProfileService} from "./profile.service";
 import { Profile } from '../../shared/models/profile.model';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgIf } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FollowComponent } from '../../follow/follow.component';
 import { ProfileTabsComponent } from './ui/profile-tabs/profile-tabs.component';
 import { AvatarComponent } from '../../avatar/avatar.component';
+import {FollowComponent} from "./follow/follow.component";
 
 @Component({
     selector: 'app-profile',

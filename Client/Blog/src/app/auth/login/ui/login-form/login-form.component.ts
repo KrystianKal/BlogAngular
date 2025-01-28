@@ -9,8 +9,7 @@ import {
 } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
-import { LoginStatus } from '../../service/login.service';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import {LoginStatus} from "../../login.service";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';

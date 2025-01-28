@@ -16,7 +16,7 @@ import {
 import { NgIf } from '@angular/common';
 import { Profile } from '../../../../shared/models/profile.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProfileService } from '../../../article/ui/article-socials/profile.service';
+import {ProfileService} from "../../../profile/profile.service";
 import { catchError, Observable, of, switchMap } from 'rxjs';
 import { AvatarComponent } from '../../../../avatar/avatar.component';
 
@@ -57,7 +57,7 @@ export class SettingsFormComponent {
     this.settingsFrom.controls.bio.setValue(this.currentProfile().bio);
   }
 
-  //on chaning file url show preview and check if valid
+  //on changing file url show preview and check if valid
   onSubmit() {
     const profileName = this.settingsFrom.controls.profileName.value;
     const bio = this.settingsFrom.controls.bio.value;

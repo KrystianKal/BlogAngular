@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Subject, switchMap } from 'rxjs';
-import { AuthService } from '../../../../shared/auth.service';
-import { Profile } from '../../../../shared/models/profile.model';
+import { Profile } from '../../shared/models/profile.model';
 
 export type UpdateProfileRequest = {
   name: string;
@@ -14,9 +12,6 @@ export type UpdateProfileRequest = {
 })
 export class ProfileService {
   http = inject(HttpClient);
-
-  constructor() {}
-
   get(username: string) {
     return this.http.get<Profile>(`api/profiles/${username}`);
   }

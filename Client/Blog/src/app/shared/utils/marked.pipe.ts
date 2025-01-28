@@ -9,7 +9,6 @@ import { marked } from 'marked';
 export class MarkedPipe implements PipeTransform {
   private sanitizer = inject(DomSanitizer);
   transform(value: string) {
-    // return this.sanitizer.sanitize(SecurityContext.HTML, marked(value));
     return this.sanitizer.sanitize(SecurityContext.HTML, marked.parse(value));
   }
 }

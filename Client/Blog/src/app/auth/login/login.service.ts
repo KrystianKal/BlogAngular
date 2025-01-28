@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AuthService, Credentials } from '../../../shared/auth.service';
+import { AuthService, Credentials } from '../../shared/auth.service';
 import { catchError, EMPTY, Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

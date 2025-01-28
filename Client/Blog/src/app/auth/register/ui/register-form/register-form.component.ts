@@ -1,6 +1,6 @@
 import { Component, inject, input, output } from '@angular/core';
 import { Credentials } from '../../../../shared/auth.service';
-import { RegistrationStatus } from '../../service/register.service';
+import {RegistrationStatus} from "../../register.service";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
