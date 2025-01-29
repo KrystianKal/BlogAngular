@@ -5,6 +5,6 @@
   </div>
   <app-login-form
     [loginStatus]="loginService.status()"
-    (login)="loginService.login$.next($event)"
+    (login)="loginService.login($event)"
   ></app-login-form>
 </div>

@@ -1,5 +1,4 @@
 import { Component, effect, inject } from '@angular/core';
-import { AuthService } from '../../shared/auth.service';
 import { LoginFormComponent } from './ui/login-form/login-form.component';
 import { LoginService } from './login.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,13 +13,11 @@ export class LoginComponent {
   public loginService = inject(LoginService);
   private router = inject(Router);
 
-  constructor() {
-    effect(() => {
+  readonly userAuthenticatedEffect = effect(() => {
       if (this.loginService.status() === 'success') {
         this.router.navigateByUrl('/').then(() => {
           window.location.reload();
         });
       }
     });
-  }
 }

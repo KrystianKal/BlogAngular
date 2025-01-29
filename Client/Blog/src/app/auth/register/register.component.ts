@@ -25,7 +25,7 @@ export class RegisterComponent {
       if (this.registerService.status() === 'success') {
         this.snackBar.open('Success! You will be redirected shortly.');
         setTimeout(() => {
-          this.loginService.login$.next(this.credentials()!);
+          this.loginService.login(this.credentials()!);
           this.router.navigateByUrl('/').then(() => window.location.reload());
         }, 1000);
       }
