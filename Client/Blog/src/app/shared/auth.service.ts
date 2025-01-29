@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, Observable, of, switchMap, tap } from 'rxjs';
+import {computed, effect, inject, Injectable, linkedSignal, signal} from '@angular/core';
+import {catchError, map, Observable, of, switchMap, tap} from 'rxjs';
 import { Profile } from './models/profile.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {rxResource, takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Router} from "@angular/router";
 
 export type AuthUser = Profile | null | undefined;
 export type Credentials = {
@@ -10,40 +11,27 @@ export type Credentials = {
   email: string;
   password: string;
 };
-
-interface AuthState {
-  user: AuthUser;
-}
-
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root'})
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
+  private router = inject(Router);
 
-  //data source
-  private user$ = this.http.get<AuthUser>('/api/profiles').pipe(
-    catchError((error: HttpErrorResponse) => {
-      return of(null);
-    })
-  );
-
-  //state
-  private state = signal<AuthState>({
-    user: undefined,
+  private authResource = rxResource({
+    loader: () => this.http.get<Profile>('api/profiles').pipe(
+      catchError(() => of(undefined)),
+    )
   });
 
-  //selector
-  user = computed(() => this.state().user);
-
-  constructor() {
-    this.user$.pipe(takeUntilDestroyed()).subscribe((user) =>
-      this.state.update((state) => ({
-        ...state,
-        user,
-      }))
-    );
+  user = computed(() => this.authResource.value());
+  error = this.authResource.error ;
+  isLoading = this.authResource.isLoading;
+  private userSignal = effect(() =>
+  {
+    console.log("AuthResource:", this.authResource.value())
+    console.log("IsLoading:", this.isLoading())
+    console.log("User:", this.user())
   }
+  )
 
   login(user: Credentials) {
     return this.http.post<AuthUser>('api/users/login', { user });

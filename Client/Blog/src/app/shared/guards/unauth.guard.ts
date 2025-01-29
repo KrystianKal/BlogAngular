@@ -1,20 +1,20 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { inject } from '@angular/core';
-import { filter, map, take, timeout } from 'rxjs';
+import {computed, inject} from '@angular/core';
+import {filter, map } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Profile } from '../models/profile.model';
 
 export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
+  const authState = computed(() => ({
+    user: authService.user(),
+    loading: authService.isLoading(),
+  }));
 
-  return toObservable(authService.user).pipe(
-    //wait for initial request if needed
-    filter((user): user is Profile | null => user !== undefined),
-    take(1),
-    timeout(5000),
-    map((user) => {
+  return toObservable(authState).pipe(
+    filter(({loading}) => !loading),
+    map(({user}) => {
       if (user) {
         router.navigate(['/']);
         return false;
