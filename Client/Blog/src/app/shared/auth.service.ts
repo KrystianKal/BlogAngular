@@ -25,13 +25,6 @@ export class AuthService {
   user = computed(() => this.authResource.value());
   error = this.authResource.error ;
   isLoading = this.authResource.isLoading;
-  private userSignal = effect(() =>
-  {
-    console.log("AuthResource:", this.authResource.value())
-    console.log("IsLoading:", this.isLoading())
-    console.log("User:", this.user())
-  }
-  )
 
   login(user: Credentials) {
     return this.http.post<AuthUser>('api/users/login', { user });
